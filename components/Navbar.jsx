@@ -16,7 +16,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header role="banner" className="w-full max-w-7xl mx-auto px-4 py-4">
+    <header role="banner" className="w-full max-w-7xl mx-auto px-4 py-4 ">
       {/* Semantic landmark containing only one clean <nav> element */}
       <nav aria-label="Main Navigation" className="bg-[#18181b]/90 backdrop-blur-md border border-zinc-800/80 rounded-2xl px-6 py-3 shadow-2xl flex items-center justify-between">
         

@@ -1,14 +1,10 @@
 "use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import { Magnifier, LocationArrow, Briefcase } from "@gravity-ui/icons";
 
-import globe from "../assets/globe.png";
 
 export default function HeroSection() {
-  const [keyword, setKeyword] = useState("");
-  const [location, setLocation] = useState("");
+ 
 
   const trendingPositions = [
     { label: "Product Designer", href: "/jobs?query=product-designer" },
@@ -16,23 +12,11 @@ export default function HeroSection() {
     { label: "Dev-ops Engineer", href: "/jobs?query=dev-ops-engineer" },
   ];
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    // Handle search logic
-  };
+ 
 
   return (
-    <section className="relative w-full pt-12 pb-8 flex flex-col items-center justify-center text-center px-4">
-      {/* Background Texture Overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-20 -z-10">
-        <Image
-          src={globe}
-          alt="globe"
-          fill
-          priority
-          className="object-cover"
-        />
-      </div>
+    <section className=" w-full max-w-6xl mx-auto pt-12 pb-8 flex flex-col items-center justify-center text-center px-4 ">
+    
 
       {/* Top Badge */}
       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-xs font-mono text-zinc-300 shadow-md mb-8">
@@ -43,20 +27,20 @@ export default function HeroSection() {
         </span>
       </div>
 
-      {/* Main Heading */}
+      
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white max-w-4xl leading-tight">
         Find Your Dream Job Today
       </h1>
 
-      {/* Subtitle */}
+     
       <p className="mt-4 text-sm sm:text-base text-zinc-400 max-w-2xl font-normal leading-relaxed">
         HireLoop connects top talent with world-class companies. Browse thousands of
         curated opportunities and land your next role – faster.
       </p>
 
-      {/* Search Bar Form */}
+      
       <form
-        onSubmit={handleSearch}
+       
         role="search"
         aria-label="Job Search"
         className="mt-8 w-full max-w-2xl bg-[#121215]/90 border border-zinc-800 rounded-2xl p-1.5 sm:p-2 flex flex-col sm:flex-row items-center gap-2 shadow-2xl focus-within:border-zinc-700 transition-all"
@@ -66,8 +50,8 @@ export default function HeroSection() {
           <Magnifier className="w-4 h-4 text-zinc-400 shrink-0" aria-hidden="true" />
           <input
             type="text"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
+          
+           
             placeholder="Job title, skill or company"
             className="w-full bg-transparent text-sm text-white placeholder-zinc-500 focus:outline-none"
             aria-label="Job title, skill or company"
@@ -82,8 +66,7 @@ export default function HeroSection() {
           <LocationArrow className="w-4 h-4 text-zinc-400 shrink-0" aria-hidden="true" />
           <input
             type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+           
             placeholder="Location or Remote"
             className="w-full bg-transparent text-sm text-white placeholder-zinc-500 focus:outline-none"
             aria-label="Location or Remote"
@@ -100,7 +83,7 @@ export default function HeroSection() {
         </button>
       </form>
 
-      {/* Trending Positions */}
+     
       <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-zinc-400">
         <span className="text-zinc-500 mr-1">Trending Position</span>
         {trendingPositions.map((pos) => (

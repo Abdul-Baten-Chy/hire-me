@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Briefcase, Persons, CircleQuestion, Star } from "@gravity-ui/icons";
-import texture from "../assets/texture.png";
+import texture from "../assets/cta-bg.png";
 
 export default function Stats() {
   const stats = [
@@ -29,27 +29,12 @@ export default function Stats() {
   ];
 
   return (
-    <section className="relative w-full max-w-6xl mx-auto mt-12 pb-16 px-4 flex flex-col items-center">
+    <section className="w-full max-w-6xl  mx-auto mt-8 pb-16 px-4 flex flex-col items-center ">
       {/* Globe Background Container */}
-      <div className="relative w-full max-w-4xl h-[320px] sm:h-[400px] flex flex-col items-center justify-start text-center pt-8 overflow-hidden rounded-t-full">
+      <div className=" w-full max-w-4xl h-[320px] sm:h-[400px] flex flex-col items-center justify-start text-center pt-8 overflow-hidden rounded-t-full">
         
-        {/* Globe Image */}
-        <Image
-          src={texture}
-          alt="texture"
-          fill
-          priority
-          className="object-cover object-top opacity-90 -z-10"
-        />
 
-        {/* Radial Blue Glow Effect */}
-        <div
-          className="absolute inset-0 bg-blue-600/20 blur-3xl rounded-full -z-20 pointer-events-none"
-          aria-hidden="true"
-        />
-
-        {/* Overlay Text */}
-        <div className="relative z-10 max-w-xl px-4 mt-6">
+        <div className=" max-w-xl px-4 mt-6">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight leading-snug">
             Assisting over <span className="font-bold">15,000</span> job seekers
             <br />
@@ -59,7 +44,7 @@ export default function Stats() {
       </div>
 
       {/* Statistics Cards Grid */}
-      <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 -mt-16 sm:-mt-24 relative z-20">
+      <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4  relative z-20">
         {stats.map((stat) => {
           const IconComponent = stat.icon;
           return (
