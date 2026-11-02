@@ -5,16 +5,43 @@ import Link from "next/link";
 import { Button } from "@heroui/react";
 import { CirclePlus, ArrowUpRightFromSquare } from "@gravity-ui/icons";
 import Image from "next/image";
+import { signOut, useSession } from "@/lib/auth-client";
+import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { 
+        data: session, 
+        isPending, //loading state
+        error, //error object
+        refetch //refetch the session
+    } = useSession() 
+    const router = useRouter();
 
   const menuItems = [
     { label: "Browse Jobs", href: "/jobs" },
     { label: "Company", href: "/company" },
     { label: "Pricing", href: "/pricing" },
   ];
-
+  const handleLogOut = async () => {
+    try {
+      await signOut({
+  fetchOptions: {
+    onSuccess: () => {
+      router.push("/auth/login"); 
+      setIsMenuOpen(false);
+    },
+  },
+});
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  }
+  // if (isPending) {
+  //   return <p>Loading...</p>;
+  // }
+ console.log("session", session)
   return (
     <header role="banner" className="w-full max-w-7xl mx-auto px-4 py-4 ">
       {/* Semantic landmark containing only one clean <nav> element */}
@@ -46,24 +73,34 @@ export default function Navbar() {
           />
 
           {/* Authentication Actions */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/login"
-              className="text-sm font-medium text-[#7C65FF] hover:text-[#917CFF] transition-colors duration-200 px-3 py-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 flex items-center gap-1.5"
-            >
-              <ArrowUpRightFromSquare className="w-4 h-4" aria-hidden="true" />
-              <span>Sign In</span>
-            </Link>
+          
+         <div className="flex items-center gap-3">
+  {isPending ? (
+    <p>Loading...</p>
+  ) : session ? (
+    <button
+      onClick={handleLogOut}
+      className="cursor-pointer rounded-full border border-transparent px-4 py-1 hover:bg-[#FD7100]"
+    >
+      Log Out
+    </button>
+  ) : (
+    <Link href="/auth/login">
+      Sign In
+    </Link>
+  )}
 
-            <Button
-              as={Link}
-              href="/register"
-              className="bg-gradient-to-r from-[#635BFF] to-[#7970FF] text-white font-medium px-5 py-2 rounded-xl text-sm shadow-lg shadow-indigo-500/20 hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 transition-all duration-200"
-              startContent={<CirclePlus className="w-4 h-4" aria-hidden="true" />}
-            >
-              Get Started
-            </Button>
-          </div>
+ <Link
+  href="/auth/signup"
+  className="inline-flex items-center justify-center bg-gradient-to-r from-[#635BFF] to-[#7970FF] text-white font-medium px-5 py-2 rounded-xl text-sm shadow-lg shadow-indigo-500/20 hover:opacity-95 transition-all duration-200"
+>
+  <CirclePlus className="w-4 h-4 mr-2" />
+  Get Started
+</Link>
+</div>
+          
+          
+          
         </div>
 
         {/* Mobile Menu Button Toggle */}
@@ -98,23 +135,31 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="my-3 border-t border-zinc-800" role="separator" />
-          <div className="flex flex-col gap-2">
-            <Link
-              className="w-full text-[#7C65FF] text-base py-1 block font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-md"
-              href="/login"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Sign In
-            </Link>
-            <Button
-              as={Link}
-              href="/register"
-              className="w-full bg-[#635BFF] text-white font-medium py-2.5 rounded-xl shadow-md text-sm"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Get Started
-            </Button>
-          </div>
+          <div className="flex flex-col items-center gap-2">
+  {isPending ? (
+    <p>Loading...</p>
+  ) : session ? (
+    <button
+      onClick={handleLogOut}
+      className="cursor-pointer rounded-full border border-transparent px-4 py-1 hover:bg-[#FD7100]"
+    >
+      Log Out
+    </button>
+  ) : (
+    <Link href="/auth/login"  onClick={() => setIsMenuOpen(false)}>
+      Sign In
+    </Link>
+  )}
+
+  <Link
+  href="/auth/signup"
+  onClick={() => setIsMenuOpen(false)}
+  className="inline-flex items-center justify-center bg-gradient-to-r from-[#635BFF] to-[#7970FF] text-white font-medium px-5 py-2 rounded-xl text-sm shadow-lg shadow-indigo-500/20 hover:opacity-95 transition-all duration-200"
+>
+  <CirclePlus className="w-4 h-4 mr-2" />
+  Get Started
+</Link>
+</div>
         </div>
       )}
     </header>
