@@ -154,7 +154,7 @@ export default function Navbar() {
   <Link
   href="/auth/signup"
   onClick={() => setIsMenuOpen(false)}
-  className="inline-flex items-center justify-center bg-gradient-to-r from-[#635BFF] to-[#7970FF] text-white font-medium px-5 py-2 rounded-xl text-sm shadow-lg shadow-indigo-500/20 hover:opacity-95 transition-all duration-200"
+  className="inline-flex items-center justify-center bg-linear-to-r from-[#635BFF] to-[#7970FF] text-white font-medium px-5 py-2 rounded-xl text-sm shadow-lg shadow-indigo-500/20 hover:opacity-95 transition-all duration-200"
 >
   <CirclePlus className="w-4 h-4 mr-2" />
   Get Started

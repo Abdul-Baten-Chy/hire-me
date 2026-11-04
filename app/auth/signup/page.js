@@ -1,9 +1,12 @@
 "use client";
 
-import { useId, useState } from "react";
+import {  useState } from "react";
+import {Description, Label, Radio, RadioGroup} from "@heroui/react";
 import { Button } from "@heroui/react";
 import { Eye, EyeSlash, LogoGooglePlay } from "@gravity-ui/icons";
 import { signUp } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -13,11 +16,13 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("job seeker");
 
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [formError, setFormError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const route=useRouter()
 
   function validate() {
     const nextErrors = {};
@@ -68,24 +73,19 @@ export default function SignUp() {
         name: name.trim(),
         email: email.trim(),
         password,
-        callbackURL: "/",
-      },{
-        onSuccess: (data) => {
-          alert("Signup successful:");
-          // Handle signup success / verification here
-        },
-        onError: (error) => {
-          setFormError(error.message);
-        }
+        role: userType,
+         callbackURL: "/",
       });
-      //
-      // if (error) {
-      //   setFormError(error.message);
-      //   return;
-      // }
-      //
-      // Handle signup success / verification.
-
+      console.log(name,userType)
+    
+if(error){
+  console.log(error)
+  alert("Error signing up: " + error.message);
+}
+if (data){
+  alert("Sign up successful! Please check your email to verify your account.");
+  route.push ("/")
+}
     
     } catch {
       setFormError("Something went wrong. Please try again.");
@@ -116,6 +116,8 @@ export default function SignUp() {
     focus-visible:ring-sky-400/30
     aria-[invalid=true]:border-red-400
   `;
+
+  
 
   return (
     <main className="
@@ -353,6 +355,31 @@ export default function SignUp() {
                 {formError.message || formError}
               </p>
             )}
+{/* user selection radio buttons  */}
+<div className="flex flex-col gap-4">
+      <Label>User Type</Label>
+      <RadioGroup value={userType} name="user-type" orientation="horizontal" onChange={(value)=>setUserType(value)}>   
+        <Radio value="job seeker">
+          <Radio.Content>
+            <Radio.Control>
+              <Radio.Indicator />
+            </Radio.Control>
+            Job Seeker
+          </Radio.Content>
+    
+        </Radio>
+        <Radio value="recruiter" >
+          <Radio.Content>
+            <Radio.Control>
+              <Radio.Indicator />
+            </Radio.Control>
+            Recruiter
+          </Radio.Content>
+          
+        </Radio>
+       
+      </RadioGroup>
+    </div>
 
             {/* Submit */}
             <Button
@@ -360,7 +387,7 @@ export default function SignUp() {
               variant="primary"
               isDisabled={isSubmitting}
               className="
-                !mt-5 w-full rounded-lg
+                mt-5! w-full rounded-lg
                 bg-sky-500 py-3
                 font-semibold text-white
                 hover:bg-sky-400
@@ -377,7 +404,7 @@ export default function SignUp() {
             {/* Login */}
             <p className="text-center text-xs text-zinc-400">
               Already have an account?{" "}
-              <a
+              <Link
                 href="/auth/login"
                 className="
                   font-medium text-sky-400
@@ -388,7 +415,7 @@ export default function SignUp() {
                 "
               >
                 Log In
-              </a>
+              </Link>
             </p>
 
             {/* Divider */}

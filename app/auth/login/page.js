@@ -4,12 +4,15 @@ import { useState } from "react";
 import { Button } from "@heroui/react";
 import { Eye, EyeSlash } from "@gravity-ui/icons";
 import { signIn } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const route=useRouter()
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,10 +39,11 @@ export default function SignInPage() {
       const { error } = await signIn.email({
         email,
         password,
-        callbackURL: "/",
+      
       },{
         onSuccess: (data) => {
-          alert("Sign in successful:");
+        
+          route.replace("/");
           // Handle sign in success here
         },
         onError: (error) => {
@@ -76,7 +80,7 @@ export default function SignInPage() {
       </div>
 
       {/* Card */}
-      <section className="relative w-full max-w-[400px] rounded-2xl border border-white/10 bg-[#11141b] px-6 py-7 shadow-2xl sm:px-8 sm:py-8">
+      <section className="relative w-full max-w-100 rounded-2xl border border-white/10 bg-[#11141b] px-6 py-7 shadow-2xl sm:px-8 sm:py-8">
 
         <h1 className="mb-6 text-center text-2xl font-semibold text-white">
           Sign in
@@ -159,7 +163,7 @@ export default function SignInPage() {
             type="submit"
             variant="primary"
             isDisabled={isLoading}
-            className="!mt-4 w-full rounded-lg bg-sky-500 py-3 font-semibold text-white hover:bg-sky-400"
+            className="mt-4! w-full rounded-lg bg-sky-500 py-3 font-semibold text-white hover:bg-sky-400"
           >
             {isLoading ? "Signing in..." : "Sign In"}
           </Button>
@@ -167,12 +171,12 @@ export default function SignInPage() {
           {/* Sign up link */}
           <p className="text-center text-xs text-zinc-400">
             Don't have an account?{" "}
-            <a
-              href="/sign-up"
+            <Link
+              href="/auth/signup"
               className="font-medium text-sky-400 hover:underline"
             >
               Sign Up
-            </a>
+            </Link>
           </p>
 
           {/* Divider */}
@@ -191,7 +195,7 @@ export default function SignInPage() {
             <svg
               aria-hidden="true"
               viewBox="0 0 48 48"
-              className="size-[18px]"
+              className="size-4.5"
             >
               <path fill="#4285F4" d="M44.5 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.5a10 10 0 0 1-4.26 6.57l6.88 5.34C42.14 36.48 44.5 30.98 44.5 24.5Z" />
               <path fill="#34A853" d="M24 45c5.4 0 9.93-1.79 13.24-4.85l-6.88-5.34c-1.8 1.2-4.1 1.9-6.36 1.9-5.18 0-9.58-3.5-11.16-8.22l-7.08 5.47C9.69 40.4 16.28 45 24 45Z" />
