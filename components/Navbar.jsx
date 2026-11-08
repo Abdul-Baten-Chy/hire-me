@@ -48,8 +48,10 @@ export default function Navbar() {
       <nav aria-label="Main Navigation" className="bg-[#18181b]/90 backdrop-blur-md border border-zinc-800/80 rounded-2xl px-6 py-3 shadow-2xl flex items-center justify-between">
         
         {/* Logo */}
-       <Image alt="logo" src="/logo.png" width={100} height={40} />
+       <Link href="/" className="flex items-center gap-2">
+         <Image alt="logo" src="/logo.png" width={100} height={40} />
 
+        </Link>
         {/* Desktop Navigation Links */}
         <div className="hidden sm:flex items-center gap-6">
           <ul className="flex items-center gap-6 list-none m-0 p-0" role="list">

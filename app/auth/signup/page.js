@@ -1,10 +1,10 @@
 "use client";
 
-import {  useState } from "react";
+import {   useState } from "react";
 import {Description, Label, Radio, RadioGroup} from "@heroui/react";
 import { Button } from "@heroui/react";
 import { Eye, EyeSlash, LogoGooglePlay } from "@gravity-ui/icons";
-import { signUp } from "@/lib/auth-client";
+import { signUp, useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function SignUp() {
   
-
+const { data: session, isPending } = useSession();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -117,7 +117,8 @@ if (data){
     aria-[invalid=true]:border-red-400
   `;
 
-  
+
+
 
   return (
     <main className="
